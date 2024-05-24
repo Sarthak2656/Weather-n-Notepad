@@ -124,30 +124,47 @@ body {
     background-color: #218838;
   }
   
-  .notepad-wrapper {
+   .notepad-wrapper {
     position: fixed;
-    right: -400px;
-    top: 0;
-    height: 100%;
-    width: 400px;
-    transition: right 0.5s ease-in-out;
-    z-index: 999; 
+    top: 10%;
+    right: -320px;
+    transition: right 0.3s ease-in-out;
+    max-width: 90%;
+    width: 320px;
+    height: 80%;
+    overflow-y: auto;
+    z-index: 999;
   }
   
   .notepad-wrapper.visible {
-    right: 0;
+    right: 20px;
   }
   
   .notepad-container {
-    height: 100%;
-    overflow-y: auto;
+    background: #E2DFD0;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .notepad-container h1 {
-    margin: 0;
-    padding: 20px;
-    background-color: #333;
-    color: white;
-    text-align: center;
+  @media (max-width: 600px) {
+    .notepad-wrapper {
+      width: 90%;
+      right: -90%;
+    }
+  
+    .notepad-wrapper.visible {
+      right: 5%;
+    }
   }
   
+  @media (min-width: 1200px) {
+    .notepad-wrapper {
+      right: -400px;
+      width: 400px;
+    }
+  
+    .notepad-wrapper.visible {
+      right: 20px;
+    }
+  }
