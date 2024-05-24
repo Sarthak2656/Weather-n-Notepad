@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
 import WeatherCards from './components/WeatherCards';
@@ -6,11 +6,17 @@ import TemperatureBarChart from './components/TemperatureChart';
 import NotePad from './components/Notepad';
 import SearchBox from './components/CitySearch';
 import './App.css';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 const App = () => {
   const [LAT, setLat] = useState(51.5074);
   const [LON, setLon] = useState(-0.1278);
   const [cityName, setCityName] = useState('London');
+  const [notepadVisible, setNotepadVisible] = useState(false);
+  const notepadRef = useRef(null);
 
   const handleSearch = (lat, lon, city) => {
     console.log("Received weather data:", { lat, lon, city });
@@ -78,7 +84,24 @@ const App = () => {
 
   const [weatherCardsRef, weatherCardsInView] = useInView({ threshold: 0.1 });
   const [temperatureChartRef, temperatureChartInView] = useInView({ threshold: 0.1 });
-  const [notepadRef, notepadInView] = useInView({ threshold: 0.1 });
+  const [notepadInView] = useInView({ threshold: 0.1 });
+
+  const handleToggleNotepad = () => {
+    setNotepadVisible(!notepadVisible);
+  };
+
+  const handleClickOutside = (event) => {
+    if (notepadRef.current && !notepadRef.current.contains(event.target)) {
+      setNotepadVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="App">
@@ -112,17 +135,35 @@ const App = () => {
 
       <br /><br />
 
-      <motion.div
-        className="notepad-container"
-        ref={notepadRef}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: notepadInView ? 1 : 0, y: notepadInView ? 0 : 20 }}
-        transition={{ duration: 2.0 }}
-        style={{ background: '#E2DFD0' }}
-      >
-        <h1>Notepad</h1>
-        <NotePad />
-      </motion.div>
+      <div className={`notepad-wrapper ${notepadVisible ? 'visible' : ''}`} ref={notepadRef}>
+        <motion.div
+          className="notepad-container"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: notepadInView ? 1 : 0, y: notepadInView ? 0 : 20 }}
+          transition={{ duration: 2.0 }}
+          style={{ background: '#E2DFD0' }}
+        >
+          <h1>Notepad</h1>
+          <NotePad />
+        </motion.div>
+      </div>
+
+      <Tooltip title={notepadVisible ? "Click to close notepad" : "Click to open notepad"} arrow>
+        <IconButton
+          onClick={handleToggleNotepad}
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: notepadVisible ? '20px' : 'auto',
+            right: notepadVisible ? 'auto' : '20px',
+            zIndex: 1000,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            color: 'white',
+          }}
+        >
+          {notepadVisible ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}
+        </IconButton>
+      </Tooltip>
     </div>
   );
 };
