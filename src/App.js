@@ -23,7 +23,7 @@ const App = () => {
     { title: 'Average Temp of Week-', value: 'Loading...' },
     { title: 'Average Rainfall of Week-', value: 'Loading...' },
     { title: 'Average Humidity of Week-', value: 'Loading...' },
-    { title: 'Temperature right now-', value: 'Loading...' },
+    { title: 'Current Temperature-', value: 'Loading...' },
   ]);
 
   const [temperatureData, setTemperatureData] = useState([
@@ -63,7 +63,7 @@ const App = () => {
             { title: 'Average Temp of Week-', value: `${avgTemp}°C` },
             { title: 'Average Rainfall of Week-', value: `${avgRainfall}mm` },
             { title: 'Average Humidity of Week-', value: `${avgHumidity}%` },
-            { title: 'Temperature right now-', value: `${currentTemp}°C` },
+            { title: 'Current Temperature-', value: `${currentTemp}°C` },
           ]);
 
           setTemperatureData(nextFiveDays);
