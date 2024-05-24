@@ -124,3 +124,29 @@ body {
     background-color: #218838;
   }
   
+  .notepad-wrapper {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    height: 100%;
+    width: 400px;
+    transition: right 0.5s ease-in-out;
+  }
+  
+  .notepad-wrapper.visible {
+    right: 0;
+  }
+  
+  .notepad-container {
+    height: 100%;
+    overflow-y: auto;
+  }
+  
+  .notepad-container h1 {
+    margin: 0;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+  }
+  
