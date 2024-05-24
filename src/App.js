@@ -153,7 +153,7 @@ const App = () => {
           onClick={handleToggleNotepad}
           style={{
             position: 'fixed',
-            top: '50%',
+            top: '45%',
             left: notepadVisible ? '20px' : 'auto',
             right: notepadVisible ? 'auto' : '20px',
             zIndex: 1000,
