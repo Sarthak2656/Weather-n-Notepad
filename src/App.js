@@ -143,7 +143,7 @@ const App = () => {
           transition={{ duration: 2.0 }}
           style={{ background: '#E2DFD0' }}
         >
-          <h2>Notepad</h2>
+          <center><h2>Notepad</h2></center>
           <NotePad />
         </motion.div>
       </div>
